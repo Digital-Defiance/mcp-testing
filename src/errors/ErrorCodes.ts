@@ -1,0 +1,172 @@
+/**
+ * Error codes for MCP Testing Server
+ *
+ * @packageDocumentation
+ */
+
+/**
+ * Error code enumeration
+ */
+export enum ErrorCode {
+  // Test Execution Errors (1xxx)
+  FRAMEWORK_NOT_FOUND = 'FRAMEWORK_NOT_FOUND',
+  TEST_FILE_NOT_FOUND = 'TEST_FILE_NOT_FOUND',
+  TEST_EXECUTION_TIMEOUT = 'TEST_EXECUTION_TIMEOUT',
+  TEST_RUNNER_CRASH = 'TEST_RUNNER_CRASH',
+  TEST_EXECUTION_FAILED = 'TEST_EXECUTION_FAILED',
+
+  // Coverage Errors (2xxx)
+  COVERAGE_TOOL_NOT_FOUND = 'COVERAGE_TOOL_NOT_FOUND',
+  COVERAGE_PARSING_FAILED = 'COVERAGE_PARSING_FAILED',
+  COVERAGE_THRESHOLD_VIOLATION = 'COVERAGE_THRESHOLD_VIOLATION',
+  COVERAGE_GENERATION_FAILED = 'COVERAGE_GENERATION_FAILED',
+
+  // Security Errors (3xxx)
+  FRAMEWORK_NOT_ALLOWED = 'FRAMEWORK_NOT_ALLOWED',
+  RESOURCE_LIMIT_EXCEEDED = 'RESOURCE_LIMIT_EXCEEDED',
+  DANGEROUS_OPERATION_BLOCKED = 'DANGEROUS_OPERATION_BLOCKED',
+  SECURITY_VALIDATION_FAILED = 'SECURITY_VALIDATION_FAILED',
+
+  // Integration Errors (4xxx)
+  MCP_SERVER_CONNECTION_FAILED = 'MCP_SERVER_CONNECTION_FAILED',
+  MCP_TOOL_CALL_FAILED = 'MCP_TOOL_CALL_FAILED',
+  INTEGRATION_TIMEOUT = 'INTEGRATION_TIMEOUT',
+  INTEGRATION_UNAVAILABLE = 'INTEGRATION_UNAVAILABLE',
+
+  // Configuration Errors (5xxx)
+  INVALID_CONFIGURATION = 'INVALID_CONFIGURATION',
+  CONFIGURATION_FILE_NOT_FOUND = 'CONFIGURATION_FILE_NOT_FOUND',
+  CONFIGURATION_PARSE_ERROR = 'CONFIGURATION_PARSE_ERROR',
+  CONFIGURATION_VALIDATION_FAILED = 'CONFIGURATION_VALIDATION_FAILED',
+
+  // Test Generation Errors (6xxx)
+  CODE_ANALYSIS_FAILED = 'CODE_ANALYSIS_FAILED',
+  TEST_TEMPLATE_NOT_FOUND = 'TEST_TEMPLATE_NOT_FOUND',
+  TEST_GENERATION_FAILED = 'TEST_GENERATION_FAILED',
+  FIXTURE_GENERATION_FAILED = 'FIXTURE_GENERATION_FAILED',
+
+  // General Errors (9xxx)
+  UNKNOWN_ERROR = 'UNKNOWN_ERROR',
+  INTERNAL_ERROR = 'INTERNAL_ERROR',
+  INVALID_REQUEST = 'INVALID_REQUEST',
+  OPERATION_CANCELLED = 'OPERATION_CANCELLED',
+}
+
+/**
+ * Error severity levels
+ */
+export enum ErrorSeverity {
+  LOW = 'low',
+  MEDIUM = 'medium',
+  HIGH = 'high',
+  CRITICAL = 'critical',
+}
+
+/**
+ * Error category for grouping related errors
+ */
+export enum ErrorCategory {
+  TEST_EXECUTION = 'test_execution',
+  COVERAGE = 'coverage',
+  SECURITY = 'security',
+  INTEGRATION = 'integration',
+  CONFIGURATION = 'configuration',
+  TEST_GENERATION = 'test_generation',
+  GENERAL = 'general',
+}
+
+/**
+ * Map error codes to categories
+ */
+export const ERROR_CATEGORY_MAP: Record<ErrorCode, ErrorCategory> = {
+  // Test Execution
+  [ErrorCode.FRAMEWORK_NOT_FOUND]: ErrorCategory.TEST_EXECUTION,
+  [ErrorCode.TEST_FILE_NOT_FOUND]: ErrorCategory.TEST_EXECUTION,
+  [ErrorCode.TEST_EXECUTION_TIMEOUT]: ErrorCategory.TEST_EXECUTION,
+  [ErrorCode.TEST_RUNNER_CRASH]: ErrorCategory.TEST_EXECUTION,
+  [ErrorCode.TEST_EXECUTION_FAILED]: ErrorCategory.TEST_EXECUTION,
+
+  // Coverage
+  [ErrorCode.COVERAGE_TOOL_NOT_FOUND]: ErrorCategory.COVERAGE,
+  [ErrorCode.COVERAGE_PARSING_FAILED]: ErrorCategory.COVERAGE,
+  [ErrorCode.COVERAGE_THRESHOLD_VIOLATION]: ErrorCategory.COVERAGE,
+  [ErrorCode.COVERAGE_GENERATION_FAILED]: ErrorCategory.COVERAGE,
+
+  // Security
+  [ErrorCode.FRAMEWORK_NOT_ALLOWED]: ErrorCategory.SECURITY,
+  [ErrorCode.RESOURCE_LIMIT_EXCEEDED]: ErrorCategory.SECURITY,
+  [ErrorCode.DANGEROUS_OPERATION_BLOCKED]: ErrorCategory.SECURITY,
+  [ErrorCode.SECURITY_VALIDATION_FAILED]: ErrorCategory.SECURITY,
+
+  // Integration
+  [ErrorCode.MCP_SERVER_CONNECTION_FAILED]: ErrorCategory.INTEGRATION,
+  [ErrorCode.MCP_TOOL_CALL_FAILED]: ErrorCategory.INTEGRATION,
+  [ErrorCode.INTEGRATION_TIMEOUT]: ErrorCategory.INTEGRATION,
+  [ErrorCode.INTEGRATION_UNAVAILABLE]: ErrorCategory.INTEGRATION,
+
+  // Configuration
+  [ErrorCode.INVALID_CONFIGURATION]: ErrorCategory.CONFIGURATION,
+  [ErrorCode.CONFIGURATION_FILE_NOT_FOUND]: ErrorCategory.CONFIGURATION,
+  [ErrorCode.CONFIGURATION_PARSE_ERROR]: ErrorCategory.CONFIGURATION,
+  [ErrorCode.CONFIGURATION_VALIDATION_FAILED]: ErrorCategory.CONFIGURATION,
+
+  // Test Generation
+  [ErrorCode.CODE_ANALYSIS_FAILED]: ErrorCategory.TEST_GENERATION,
+  [ErrorCode.TEST_TEMPLATE_NOT_FOUND]: ErrorCategory.TEST_GENERATION,
+  [ErrorCode.TEST_GENERATION_FAILED]: ErrorCategory.TEST_GENERATION,
+  [ErrorCode.FIXTURE_GENERATION_FAILED]: ErrorCategory.TEST_GENERATION,
+
+  // General
+  [ErrorCode.UNKNOWN_ERROR]: ErrorCategory.GENERAL,
+  [ErrorCode.INTERNAL_ERROR]: ErrorCategory.GENERAL,
+  [ErrorCode.INVALID_REQUEST]: ErrorCategory.GENERAL,
+  [ErrorCode.OPERATION_CANCELLED]: ErrorCategory.GENERAL,
+};
+
+/**
+ * Map error codes to severity levels
+ */
+export const ERROR_SEVERITY_MAP: Record<ErrorCode, ErrorSeverity> = {
+  // Test Execution
+  [ErrorCode.FRAMEWORK_NOT_FOUND]: ErrorSeverity.HIGH,
+  [ErrorCode.TEST_FILE_NOT_FOUND]: ErrorSeverity.MEDIUM,
+  [ErrorCode.TEST_EXECUTION_TIMEOUT]: ErrorSeverity.MEDIUM,
+  [ErrorCode.TEST_RUNNER_CRASH]: ErrorSeverity.HIGH,
+  [ErrorCode.TEST_EXECUTION_FAILED]: ErrorSeverity.MEDIUM,
+
+  // Coverage
+  [ErrorCode.COVERAGE_TOOL_NOT_FOUND]: ErrorSeverity.MEDIUM,
+  [ErrorCode.COVERAGE_PARSING_FAILED]: ErrorSeverity.MEDIUM,
+  [ErrorCode.COVERAGE_THRESHOLD_VIOLATION]: ErrorSeverity.LOW,
+  [ErrorCode.COVERAGE_GENERATION_FAILED]: ErrorSeverity.MEDIUM,
+
+  // Security
+  [ErrorCode.FRAMEWORK_NOT_ALLOWED]: ErrorSeverity.CRITICAL,
+  [ErrorCode.RESOURCE_LIMIT_EXCEEDED]: ErrorSeverity.HIGH,
+  [ErrorCode.DANGEROUS_OPERATION_BLOCKED]: ErrorSeverity.CRITICAL,
+  [ErrorCode.SECURITY_VALIDATION_FAILED]: ErrorSeverity.HIGH,
+
+  // Integration
+  [ErrorCode.MCP_SERVER_CONNECTION_FAILED]: ErrorSeverity.HIGH,
+  [ErrorCode.MCP_TOOL_CALL_FAILED]: ErrorSeverity.MEDIUM,
+  [ErrorCode.INTEGRATION_TIMEOUT]: ErrorSeverity.MEDIUM,
+  [ErrorCode.INTEGRATION_UNAVAILABLE]: ErrorSeverity.LOW,
+
+  // Configuration
+  [ErrorCode.INVALID_CONFIGURATION]: ErrorSeverity.HIGH,
+  [ErrorCode.CONFIGURATION_FILE_NOT_FOUND]: ErrorSeverity.LOW,
+  [ErrorCode.CONFIGURATION_PARSE_ERROR]: ErrorSeverity.HIGH,
+  [ErrorCode.CONFIGURATION_VALIDATION_FAILED]: ErrorSeverity.MEDIUM,
+
+  // Test Generation
+  [ErrorCode.CODE_ANALYSIS_FAILED]: ErrorSeverity.MEDIUM,
+  [ErrorCode.TEST_TEMPLATE_NOT_FOUND]: ErrorSeverity.LOW,
+  [ErrorCode.TEST_GENERATION_FAILED]: ErrorSeverity.MEDIUM,
+  [ErrorCode.FIXTURE_GENERATION_FAILED]: ErrorSeverity.MEDIUM,
+
+  // General
+  [ErrorCode.UNKNOWN_ERROR]: ErrorSeverity.HIGH,
+  [ErrorCode.INTERNAL_ERROR]: ErrorSeverity.CRITICAL,
+  [ErrorCode.INVALID_REQUEST]: ErrorSeverity.MEDIUM,
+  [ErrorCode.OPERATION_CANCELLED]: ErrorSeverity.LOW,
+};

@@ -1,0 +1,27 @@
+{
+  "testMatch": [
+    "**/__tests__/**/*.[jt]s?(x)",
+    "**/?(*.)+(spec|test).[jt]s?(x)"
+  ],
+  "testPathIgnorePatterns": [
+    "/node_modules/",
+    "/dist/",
+    "/build/"
+  ],
+  "coverageDirectory": "coverage",
+  "coverageReporters": [
+    "json",
+    "lcov",
+    "text",
+    "html"
+  ],
+  "timeout": 5000,
+  "projectPath": "/tmp/vitest-e2e-test-XuBPJK/project",
+  "config": {
+    "test": {
+      "coverage": {
+        "provider": "v8"
+      }
+    }
+  }
+}

@@ -1,0 +1,180 @@
+{
+  "name": "@ai-capabilities-suite/mcp-testing",
+  "version": "0.1.0",
+  "packageManager": "yarn@4.12.0",
+  "mcpName": "io.github.Digital-Defiance/mcp-testing",
+  "homepage": "https://github.com/Digital-Defiance/ai-capabilities-suite",
+  "description": "Enterprise-grade MCP server providing comprehensive testing capabilities for AI agents. Features 25+ testing tools including test execution, coverage analysis, test generation, debugging integration, mutation testing, flaky test detection, and visual regression testing. Supports Jest, Mocha, Pytest, and Vitest.",
+  "main": "./dist/src/index.js",
+  "module": "./dist/src/index.js",
+  "types": "./dist/src/index.d.ts",
+  "bin": "./dist/src/cli.js",
+  "pkg": {
+    "scripts": [
+      "dist/src/**/*.js"
+    ],
+    "assets": [
+      "dist/**/*",
+      "node_modules/@modelcontextprotocol/sdk/**/*"
+    ],
+    "targets": [
+      "node18-linux-x64",
+      "node18-macos-x64",
+      "node18-win-x64"
+    ],
+    "outputPath": "../../binaries"
+  },
+  "exports": {
+    "./package.json": "./package.json",
+    ".": {
+      "@ts-mcp/source": "./src/index.ts",
+      "types": "./dist/src/index.d.ts",
+      "import": "./dist/src/index.js",
+      "default": "./dist/src/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE",
+    "!**/*.tsbuildinfo",
+    "!**/*.spec.js",
+    "!**/*.test.js"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.lib.json",
+    "pretest": "npm run build && npm run test:cleanup",
+    "test": "jest",
+    "test:cleanup": "rm -f jest.config.json",
+    "test:unit": "jest --testPathPattern=unit",
+    "test:property": "jest --testPathPattern=property",
+    "test:integration": "jest --testPathPattern=integration",
+    "test:e2e": "jest --testPathPattern=e2e",
+    "test:coverage": "jest --coverage",
+    "lint": "eslint src --ext .ts",
+    "format": "prettier --write \"src/**/*.ts\"",
+    "format:check": "prettier --check \"src/**/*.ts\"",
+    "publish:public": "npm publish --access public"
+  },
+  "keywords": [
+    "mcp",
+    "mcp-server",
+    "model-context-protocol",
+    "testing",
+    "test-runner",
+    "jest",
+    "mocha",
+    "pytest",
+    "vitest",
+    "coverage",
+    "test-coverage",
+    "test-generation",
+    "mutation-testing",
+    "flaky-tests",
+    "visual-regression",
+    "test-debugging",
+    "ai-agent",
+    "ai-testing",
+    "kiro",
+    "amazon-q",
+    "github-copilot",
+    "test-automation",
+    "test-analysis",
+    "test-impact-analysis",
+    "performance-testing",
+    "enterprise",
+    "development-tools",
+    "devtools"
+  ],
+  "author": {
+    "name": "Digital Defiance",
+    "email": "info@digitaldefiance.org",
+    "url": "https://digitaldefiance.org"
+  },
+  "contributors": [
+    {
+      "name": "Jessica Mulein",
+      "email": "jessica@digitaldefiance.org",
+      "url": "https://github.com/JessicaMulein"
+    }
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/digital-defiance/ai-capabilities-suite.git"
+  },
+  "bugs": {
+    "url": "https://github.com/digital-defiance/ai-capabilities-suite/issues",
+    "email": "info@digitaldefiance.org"
+  },
+  "funding": {
+    "type": "github",
+    "url": "https://github.com/sponsors/digitaldefiance"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=8.0.0"
+  },
+  "os": [
+    "darwin",
+    "linux",
+    "win32"
+  ],
+  "cpu": [
+    "x64",
+    "arm64"
+  ],
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "mcp": {
+    "server": {
+      "name": "mcp-testing",
+      "description": "Comprehensive testing capabilities for AI agents",
+      "version": "0.1.0",
+      "command": "mcp-testing",
+      "args": [],
+      "capabilities": [
+        "test-execution",
+        "coverage-analysis",
+        "test-generation",
+        "test-debugging",
+        "mutation-testing",
+        "flaky-detection",
+        "visual-regression",
+        "impact-analysis",
+        "performance-benchmarking"
+      ],
+      "tools": 25,
+      "categories": [
+        "testing",
+        "development-tools",
+        "quality-assurance",
+        "automation"
+      ]
+    }
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.23.0",
+    "tslib": "^2.3.0",
+    "zod": "^4.1.13"
+  },
+  "devDependencies": {
+    "@swc/core": "^1.15.3",
+    "@swc/helpers": "^0.5.15",
+    "@swc/jest": "^0.2.39",
+    "@types/jest": "^29.5.8",
+    "@types/node": "^18.0.0",
+    "@typescript-eslint/eslint-plugin": "^6.0.0",
+    "@typescript-eslint/parser": "^6.0.0",
+    "eslint": "^8.50.0",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-prettier": "^5.0.0",
+    "fast-check": "^4.4.0",
+    "jest": "^29.7.0",
+    "prettier": "^3.0.0",
+    "typescript": "^5.3.3"
+  },
+  "type": "commonjs"
+}
