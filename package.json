@@ -1,6 +1,6 @@
 {
   "name": "@ai-capabilities-suite/mcp-testing",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "packageManager": "yarn@4.12.0",
   "mcpName": "io.github.Digital-Defiance/mcp-testing",
   "homepage": "https://github.com/Digital-Defiance/ai-capabilities-suite",

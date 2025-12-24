@@ -54,13 +54,16 @@ export class TestRunnerManager extends EventEmitter {
   private activeProcesses: Map<string, TestRunnerProcess> = new Map();
   private watchModeProcesses: Map<string, NodeJS.Timeout> = new Map();
   private processCounter = 0;
+  private projectPath: string;
 
   constructor(
+    projectPath?: string,
     securityManager?: SecurityManager,
     frameworkDetector?: FrameworkDetector,
     resultParser?: ResultParser
   ) {
     super();
+    this.projectPath = projectPath || process.cwd();
     this.securityManager = securityManager || new SecurityManager();
     this.frameworkDetector = frameworkDetector || new FrameworkDetector();
     this.resultParser = resultParser || new ResultParser();
@@ -322,6 +325,33 @@ export class TestRunnerManager extends EventEmitter {
   }
 
   /**
+   * Check if project has a package.json with test script
+   *
+   * @param projectPath - Project directory path
+   * @param framework - Test framework
+   * @returns True if should use package script
+   */
+  private async shouldUsePackageScript(
+    projectPath: string,
+    framework: TestFramework
+  ): Promise<boolean> {
+    try {
+      const fs = await import('fs/promises');
+      const path = await import('path');
+      const packageJsonPath = path.join(projectPath, 'package.json');
+
+      const content = await fs.readFile(packageJsonPath, 'utf-8');
+      const packageJson = JSON.parse(content);
+
+      // Check if there's a test script
+      return packageJson.scripts && packageJson.scripts.test;
+    } catch (error) {
+      // If package.json doesn't exist or can't be read, use npx
+      return false;
+    }
+  }
+
+  /**
    * Build test command for a framework
    *
    * @param options - Test run options
@@ -330,7 +360,7 @@ export class TestRunnerManager extends EventEmitter {
   private async buildTestCommand(
     options: TestRunOptions
   ): Promise<{ executable: string; args: string[]; cwd: string; env: Record<string, string> }> {
-    const cwd = process.cwd();
+    const cwd = this.projectPath;
     // Filter out undefined values from env
     const baseEnv: Record<string, string> = {};
     for (const [key, value] of Object.entries(process.env)) {
@@ -340,9 +370,23 @@ export class TestRunnerManager extends EventEmitter {
     }
     const env = { ...baseEnv, ...(options.env || {}) };
 
+    // Check if project has a package.json with test script
+    const usePackageScript = await this.shouldUsePackageScript(cwd, options.framework);
+
     switch (options.framework) {
       case TestFramework.JEST: {
-        const args = ['jest'];
+        let executable: string;
+        let args: string[];
+
+        if (usePackageScript) {
+          // Use yarn/npm test script
+          executable = 'yarn';
+          args = ['test'];
+        } else {
+          // Use npx jest directly
+          executable = 'npx';
+          args = ['jest'];
+        }
 
         if (options.testPath) {
           args.push(options.testPath);
@@ -358,6 +402,9 @@ export class TestRunnerManager extends EventEmitter {
 
         if (options.watch) {
           args.push('--watch');
+        } else {
+          // Add --no-watch to ensure tests run once
+          args.push('--no-watch');
         }
 
         if (options.maxWorkers) {
@@ -365,7 +412,7 @@ export class TestRunnerManager extends EventEmitter {
         }
 
         return {
-          executable: 'npx',
+          executable,
           args,
           cwd,
           env,

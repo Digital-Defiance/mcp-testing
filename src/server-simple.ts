@@ -310,18 +310,29 @@ export class MCPTestingServer {
 
   // Tool handler implementations
   private async handleTestRun(args: unknown) {
-    const { framework, testPath, pattern, watch, coverage, parallel, maxWorkers, timeout, env } =
-      args as {
-        framework: TestFramework;
-        testPath?: string;
-        pattern?: string;
-        watch?: boolean;
-        coverage?: boolean;
-        parallel?: boolean;
-        maxWorkers?: number;
-        timeout?: number;
-        env?: Record<string, string>;
-      };
+    const {
+      framework,
+      projectPath,
+      testPath,
+      pattern,
+      watch,
+      coverage,
+      parallel,
+      maxWorkers,
+      timeout,
+      env,
+    } = args as {
+      framework: TestFramework;
+      projectPath?: string;
+      testPath?: string;
+      pattern?: string;
+      watch?: boolean;
+      coverage?: boolean;
+      parallel?: boolean;
+      maxWorkers?: number;
+      timeout?: number;
+      env?: Record<string, string>;
+    };
 
     // Validate required parameters
     if (!framework) {
@@ -338,7 +349,7 @@ export class MCPTestingServer {
 
     try {
       const { TestRunnerManager } = await import('./components/TestRunnerManager');
-      const runner = new TestRunnerManager();
+      const runner = new TestRunnerManager(projectPath);
 
       const options = {
         framework,
@@ -357,11 +368,13 @@ export class MCPTestingServer {
       return {
         status: 'success',
         data: {
-          tests: results,
-          passed: results.filter((r) => r.status === 'passed').length,
-          failed: results.filter((r) => r.status === 'failed').length,
-          skipped: results.filter((r) => r.status === 'skipped').length,
-          total: results.length,
+          results,
+          summary: {
+            passed: results.filter((r) => r.status === 'passed').length,
+            failed: results.filter((r) => r.status === 'failed').length,
+            skipped: results.filter((r) => r.status === 'skipped').length,
+            total: results.length,
+          },
         },
       };
     } catch (error) {

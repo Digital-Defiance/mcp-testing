@@ -16,7 +16,7 @@
     "html"
   ],
   "timeout": 5000,
-  "projectPath": "/tmp/vitest-e2e-test-XuBPJK/project",
+  "projectPath": "/tmp/vitest-e2e-test-2sV0wz/project",
   "config": {
     "test": {
       "coverage": {
